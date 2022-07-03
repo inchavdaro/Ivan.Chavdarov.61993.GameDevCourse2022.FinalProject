@@ -55,23 +55,17 @@ public class WeaponController : MonoBehaviour
             playerAnimator.SetBool("isShooting", true);
             ShootingSystem.Play();
             Vector3 direction = GetDirection();
+            TrailRenderer trail = Instantiate(BulletTrail, firePoint.transform.position, Quaternion.identity);
 
             if (Physics.Raycast(firePoint.transform.position, direction, out hit, range))
             {
-                TrailRenderer trail = Instantiate(BulletTrail, firePoint.transform.position, Quaternion.identity);
-
                 StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, hit, true));
-
-                LastShootTime = Time.time;
             }
             else
             {
-                TrailRenderer trail = Instantiate(BulletTrail, firePoint.transform.position, Quaternion.identity);
-
                 StartCoroutine(SpawnTrail(trail, transform.forward * range, Vector3.zero, hit, false));
-
-                LastShootTime = Time.time;
             }
+            LastShootTime = Time.time;
         }
     }
 
