@@ -17,7 +17,8 @@ public class EnemyAiController : MonoBehaviour
         health -= damage;
         if(health <= 0)
         {
-            Destroy(gameObject);
+            animator.SetTrigger("isDead");
+            //Destroy(gameObject);
             gameController.enemiesAlive--;
         }
     }
@@ -31,7 +32,15 @@ public class EnemyAiController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetComponent<NavMeshAgent>().destination = player.transform.position;
+        if (health > 0)
+        {
+            GetComponent<NavMeshAgent>().destination = player.transform.position;
+        }
+        else
+        {
+            GetComponent<NavMeshAgent>().isStopped = true;
+            GetComponent<CapsuleCollider>().enabled = false;
+        }
         if (GetComponent<NavMeshAgent>().velocity.magnitude > 1)
         {
             animator.SetBool("isRunning", true);
@@ -46,6 +55,9 @@ public class EnemyAiController : MonoBehaviour
     {
         if(collision.gameObject == player)
         {
+            GetComponent<NavMeshAgent>().isStopped = true;
+            animator.SetTrigger("isAttacking");
+            ScreenShakeController.ShakeScreenLight();
             player.GetComponent<PlayerController>().Hit(damage);
         }
     }

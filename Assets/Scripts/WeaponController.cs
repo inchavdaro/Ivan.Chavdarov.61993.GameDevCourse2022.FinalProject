@@ -6,18 +6,20 @@ public class WeaponController : MonoBehaviour
 {
     public GameObject firePoint;
     public Animator playerAnimator;
-    public Vector3 BulletSpreadVariance = new Vector3(0f, 0f, 0f);
+    public Vector3 BulletSpreadHip = new Vector3(0f, 0f, 0f);
+    public Vector3 BulletSpreadAiming = new Vector3(0f, 0f, 0f);
     public ParticleSystem ShootingSystem;
     public TrailRenderer BulletTrail;
     public ParticleSystem ImpactParticleSystem;
 
     public float range = 100f;
     public float damage = 50f;
-    public bool AddBulletSpread = true;
     public float ShootDelay = 0.5f;
+    public float bulletShoutCount = 1;
     private float LastShootTime;
     private float BulletSpeed = 100;
     private bool shoot = false;
+    private bool aiming = false;
 
 
     // Start is called before the first frame update
@@ -29,6 +31,11 @@ public class WeaponController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetButtonDown("Fire2"))
+        {
+            aiming = !aiming;
+            playerAnimator.SetBool("isAiming", aiming);
+        }
         if (Input.GetButtonDown("Fire1"))
         {
             shoot = true;
@@ -49,21 +56,21 @@ public class WeaponController : MonoBehaviour
 
         if (LastShootTime + ShootDelay < Time.time)
         {
-            // Use an object pool instead for these! To keep this tutorial focused, we'll skip implementing one.
-            // For more details you can see: https://youtu.be/fsDE_mO4RZM or if using Unity 2021+: https://youtu.be/zyzqA_CPz2E
-
             playerAnimator.SetBool("isShooting", true);
             ShootingSystem.Play();
             Vector3 direction = GetDirection();
             TrailRenderer trail = Instantiate(BulletTrail, firePoint.transform.position, Quaternion.identity);
 
-            if (Physics.Raycast(firePoint.transform.position, direction, out hit, range))
+            for (int i = 0; i < bulletShoutCount; i++)
             {
-                StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, hit, true));
-            }
-            else
-            {
-                StartCoroutine(SpawnTrail(trail, transform.forward * range, Vector3.zero, hit, false));
+                if (Physics.Raycast(firePoint.transform.position, direction, out hit, range))
+                {
+                    StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, hit, true));
+                }
+                else
+                {
+                    StartCoroutine(SpawnTrail(trail, transform.forward * range, Vector3.zero, hit, false));
+                }
             }
             LastShootTime = Time.time;
         }
@@ -73,12 +80,22 @@ public class WeaponController : MonoBehaviour
     {
         Vector3 direction = transform.forward;
 
-        if (AddBulletSpread)
+        if (aiming)
         {
             direction += new Vector3(
-                Random.Range(-BulletSpreadVariance.x, BulletSpreadVariance.x),
-                Random.Range(-BulletSpreadVariance.y, BulletSpreadVariance.y),
-                Random.Range(-BulletSpreadVariance.z, BulletSpreadVariance.z)
+                Random.Range(-BulletSpreadAiming.x, BulletSpreadAiming.x),
+                Random.Range(-BulletSpreadAiming.y, BulletSpreadAiming.y),
+                Random.Range(-BulletSpreadAiming.z, BulletSpreadAiming.z)
+            );
+
+            direction.Normalize();
+        }
+        else
+        {
+            direction += new Vector3(
+                Random.Range(-BulletSpreadHip.x, BulletSpreadHip.x),
+                Random.Range(-BulletSpreadHip.y, BulletSpreadHip.y),
+                Random.Range(-BulletSpreadHip.z, BulletSpreadHip.z)
             );
 
             direction.Normalize();
