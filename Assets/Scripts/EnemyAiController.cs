@@ -11,16 +11,11 @@ public class EnemyAiController : MonoBehaviour
 
     public float damage = 20f;
     public float health = 100f;
+    private bool dead = false;
 
     public void Hit(float damage)
     {
         health -= damage;
-        if(health <= 0)
-        {
-            animator.SetTrigger("isDead");
-            //Destroy(gameObject);
-            gameController.enemiesAlive--;
-        }
     }
 
     // Start is called before the first frame update
@@ -36,10 +31,9 @@ public class EnemyAiController : MonoBehaviour
         {
             GetComponent<NavMeshAgent>().destination = player.transform.position;
         }
-        else
+        else if(!dead)
         {
-            GetComponent<NavMeshAgent>().isStopped = true;
-            GetComponent<CapsuleCollider>().enabled = false;
+            die();
         }
         if (GetComponent<NavMeshAgent>().velocity.magnitude > 1)
         {
@@ -51,13 +45,21 @@ public class EnemyAiController : MonoBehaviour
         }
     }
 
+    private void die()
+    {
+        dead = true;
+        animator.SetTrigger("isDead");
+        GetComponent<NavMeshAgent>().isStopped = true;
+        GetComponent<CapsuleCollider>().enabled = false;
+        //Destroy(gameObject);
+        gameController.enemiesAlive--;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject == player)
         {
-            GetComponent<NavMeshAgent>().isStopped = true;
             animator.SetTrigger("isAttacking");
-            ScreenShakeController.ShakeScreenLight();
             player.GetComponent<PlayerController>().Hit(damage);
         }
     }

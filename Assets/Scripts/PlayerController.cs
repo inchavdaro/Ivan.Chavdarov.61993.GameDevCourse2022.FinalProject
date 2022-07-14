@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-
+using EZCameraShake;
 
 public class PlayerController : MonoBehaviour
 {
@@ -32,8 +31,9 @@ public class PlayerController : MonoBehaviour
     {
         health -= damage;
         healthText.text = HEALTH + health.ToString();
+        CameraShaker.Instance.ShakeOnce(4f, 4f, .1f, 1f);
 
-        if(health <= 0)
+        if (health <= 0)
         {
             gameController.EndGame();
         }

@@ -320,15 +320,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 1485547602}
   playerAnimator: {fileID: 4924542354187363566}
-  BulletSpreadHip: {x: 0.5, y: 0.5, z: 0}
+  BulletSpreadHip: {x: 0.5, y: 0.5, z: 0.5}
   BulletSpreadAiming: {x: 0.3, y: 0.3, z: 0.3}
   ShootingSystem: {fileID: 198234346748616026, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
   BulletTrail: {fileID: 328621789431213768, guid: 43559d27d223bf340b413fde1315c256, type: 3}
   ImpactParticleSystem: {fileID: 9064919875212695174, guid: a5e1e2c4d2cd81f4abed6272a2b8187a, type: 3}
   range: 20
   damage: 50
-  ShootDelay: 0.5
-  bulletShoutCount: 12
+  ShootDelay: 0.7
+  bulletShoutCount: 10
 --- !u!1001 &509995321
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -558,7 +558,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6570052880154060475, guid: 60dc223720b0d4c6883077467bc3fea7, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7729665581313859819, guid: 60dc223720b0d4c6883077467bc3fea7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1242,7 +1242,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7851956902133809267, guid: af389ff46a88441d981d1590c46639f6, type: 3}
   m_PrefabInstance: {fileID: 7851956900858868342}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1429761056
+--- !u!114 &1429761061
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1251,18 +1251,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1429761051}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77c5f32902999471ab2b7a3aefcb1b7f, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ab8353b5ebd32545867da143199a814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shakeCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  lightIntensity: 0.5
-  highIntensity: 2
-  duration: 0.3
+  DefaultPosInfluence: {x: 0, y: 0, z: 0}
+  DefaultRotInfluence: {x: 0, y: 0, z: 0}
+  RestPositionOffset: {x: 0, y: 0, z: 0}
+  RestRotationOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &1473542448
 GameObject:
   m_ObjectHideFlags: 0
@@ -2384,7 +2379,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1663670962469075570, guid: af389ff46a88441d981d1590c46639f6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2927546591301244568, guid: af389ff46a88441d981d1590c46639f6, type: 3}
       propertyPath: m_Controller
@@ -2437,6 +2432,18 @@ PrefabInstance:
     - target: {fileID: 7091006325899036543, guid: af389ff46a88441d981d1590c46639f6, type: 3}
       propertyPath: m_Name
       value: First_Person_Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7851956902133809278, guid: af389ff46a88441d981d1590c46639f6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 7851956902133809278, guid: af389ff46a88441d981d1590c46639f6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7851956902133809278, guid: af389ff46a88441d981d1590c46639f6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 8783024722438339501, guid: af389ff46a88441d981d1590c46639f6, type: 3}
       propertyPath: m_LocalRotation.w

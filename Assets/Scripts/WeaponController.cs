@@ -58,11 +58,11 @@ public class WeaponController : MonoBehaviour
         {
             playerAnimator.SetBool("isShooting", true);
             ShootingSystem.Play();
-            Vector3 direction = GetDirection();
-            TrailRenderer trail = Instantiate(BulletTrail, firePoint.transform.position, Quaternion.identity);
-
+            
             for (int i = 0; i < bulletShoutCount; i++)
             {
+                Vector3 direction = GetDirection();
+                TrailRenderer trail = Instantiate(BulletTrail, firePoint.transform.position, Quaternion.identity);
                 if (Physics.Raycast(firePoint.transform.position, direction, out hit, range))
                 {
                     StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, hit, true));

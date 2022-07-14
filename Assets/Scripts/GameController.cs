@@ -44,20 +44,6 @@ public class GameController : MonoBehaviour
             enemySpawned.GetComponent<EnemyAiController>().gameController = GetComponent<GameController>();
 
             enemiesAlive++;
-
-            if(x % 3 == 0)
-            {
-                spawnOnIntervals();
-            }
-        }
-    }
-
-    private void spawnOnIntervals()
-    {
-        float start = Time.deltaTime;
-        while (start + 2 < Time.deltaTime)
-        {
-
         }
     }
 
